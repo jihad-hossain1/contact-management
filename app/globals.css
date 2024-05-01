@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.btn{
+    @apply bg-[#3366CC] text-white px-4 py-3 rounded-xl hover:bg-opacity-90 shadow-sm hover:shadow ;
+}
+
+.inpt{
+    @apply rounded-2xl shadow-md drop-shadow-sm border border-gray-50 px-4 py-3 focus:outline-none w-[380px] md:w-[500px]
+rounded-2xl shadow-md drop-shadow-sm border border-gray-50 px-4 py-3 focus:outline-none w-[380px] md:w-[500px] ;
+}
