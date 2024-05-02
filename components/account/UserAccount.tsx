@@ -1,15 +1,12 @@
 'use client'
 
 import { UserTypeResponse } from '@/helpers/interface'
-import { getCurrentUser } from '@/utils/fetchUser'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const UserAccount = () => {
     const [currentUser, setCurrentUser] = useState<UserTypeResponse>()
-    const [sucess, setSuccess] = useState('')
-    const router = useRouter()
-
 
     useEffect(() => {
         async function getCurrentUser() {
@@ -21,16 +18,7 @@ const UserAccount = () => {
     }, [])
 
 
-    const handleLogout = async () => {
-        const response = await fetch('/api/v1/users/logout')
-        const data = await response.json()
-        console.log(data)
-        setSuccess("Logout successful. Redirecting to login...")
-        setTimeout(() => {
-            router.push('/login')
-        }, 2000);
 
-    }
     return (
         <>
             {currentUser && (
@@ -39,10 +27,7 @@ const UserAccount = () => {
                     <h4 className='font-bold w-fit px-6 rounded-md'>
                         {currentUser?.data?.fullname}
                     </h4>
-                    {sucess && <p className='text-green-500'>{sucess}</p>}
-                    <button className='py-1 px-4 shadow-sm hover:shadow bg-[#3366CC] text-white rounded' onClick={handleLogout}>
-                        Logout
-                    </button>
+                    <Link href={'/logout'} className='bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600'>Logout</Link>
                 </div>
             )}
         </>
