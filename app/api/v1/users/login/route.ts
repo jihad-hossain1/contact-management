@@ -37,22 +37,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const token = jwt.sign(
-      { user: { fullname: user.fullname, email: user.email } },
-      process.env.JWT_SECRET as string,
-      { expiresIn: "10h" }
-    );
+    // const token = jwt.sign(
+    //   { user: { fullname: user.fullname, email: user.email } },
+    //   process.env.JWT_SECRET as string,
+    //   { expiresIn: "10h" }
+    // );
 
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("token", token);
-    }
+    // if (typeof window !== "undefined") {
+    //   sessionStorage.setItem("token", token);
+    // }
 
-    return NextResponse.json(
-      {
-        messsage: "Login successful",
-      },
-      { status: 200 }
-    );
+    // return NextResponse.json(
+    //   {
+    //     messsage: "Login successful",
+    //   },
+    //   { status: 200 }
+    // );
+
+    const tokenData = {
+      id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+    };
+
+    // console.log("user from tokendata", tokenData);
+
+    const token = await jwt.sign(tokenData, process.env.JWT_SECRET!, {
+      expiresIn: "10h",
+    });
+
+    const response = NextResponse.json({
+      message: "login successfull",
+      success: true,
+    });
+
+    response.cookies.set("token", token, {
+      httpOnly: false,
+    });
+
+    return response;
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }

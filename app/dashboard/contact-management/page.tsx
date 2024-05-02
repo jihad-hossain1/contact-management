@@ -1,10 +1,38 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import { FaTrash } from "react-icons/fa";
 import { MdOutgoingMail } from "react-icons/md";
 import { FaListUl } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const ContactManagementPage = () => {
+    const [users, setUsers] = useState([])
+    const [currentUser, setCurrentUser] = useState({})
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        async function getUsers() {
+            setLoading(true)
+            const response = await fetch('/api/v1/users')
+            const data = await response.json()
+            setUsers(data)
+            setLoading(false)
+        }
+        getUsers()
+    }, [])
+
+    useEffect(() => {
+        async function getCurrentUser() {
+            const response = await fetch('/api/v1/users/user')
+            const data = await response.json()
+            setCurrentUser(data)
+        }
+        getCurrentUser()
+    }, [])
+
+
+    console.log(currentUser)
     return (
         <div className='max-w-screen-xl mx-auto p-2 my-10'>
             <div className='flex flex-col md:flex-row md:justify-between gap-4'>
