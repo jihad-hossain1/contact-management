@@ -4,7 +4,7 @@ import React from "react";
 import AnimOne from "@/components/ui/AnimOne";
 import { IoMdMail } from "react-icons/io";
 import { FaUserLarge } from "react-icons/fa6";
-import { sendResponse } from "next/dist/server/image-optimizer";
+import Link from "next/link";
 
 
 
@@ -67,7 +67,7 @@ const ContactUsPage = () => {
     return (
         <main>
             <div className=" bg-[#3366CC] py-4 text-white px-6 flex flex-col gap-2 md:justify-between md:items-center md:flex-row">
-                <h1 className="text-3xl font-bold uppercase">Demo Logo</h1>
+                <Link href={"/"} className="text-3xl font-bold uppercase">Demo Logo</Link>
                 <div>
                     <input type="text" name="" id="" placeholder="Search" className="bg-white text-gray-600 px-4 py-2 rounded-md focus:outline-none md:max-w-[600px] md:min-w-[400px]" />
                 </div>
