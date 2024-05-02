@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react'
 const LogoutPage = () => {
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState('')
+    const [isLogin, setIsLogin] = useState(false)
     const router = useRouter()
 
     const [currentUser, setCurrentUser] = useState<UserTypeResponse>()
@@ -32,7 +33,19 @@ const LogoutPage = () => {
 
         setSuccess("Logout successful. Redirecting to login...")
         setLoading(false)
+        setIsLogin(true)
+        setTimeout(() => {
+            setSuccess('')
+        }, 1500);
     }
+
+    useEffect(() => {
+        if (isLogin) {
+            setIsLogin(true)
+        }
+    }, [isLogin])
+
+
     return (
         <main className='max-w-screen-xl m-auto flex justify-center items-center min-h-[100vh] my-4'>
             <div className=' rounded-2xl shadow border border-blue-100 p-5 md:p-20 '>
@@ -44,7 +57,8 @@ const LogoutPage = () => {
                         The password has been send to your registered email <br className='hidden md:block' /> address. Kindly check your email inbox and spam <br className='hidden md:block' /> folder.
                     </h4>
                     {success && <p className='text-green-500'>{success}</p>}
-                    {currentUser ? (<button className='py-1 px-4 shadow-sm hover:shadow bg-[#3366CC] text-white rounded' onClick={handleLogout}> {loading ? 'Loading...' : 'Logout'} </button>) : (<Link href={'/login'} className='py-1 px-4 shadow-sm hover:shadow bg-[#3366CC] text-white rounded'>Login</Link>)}
+                    {isLogin === false && currentUser?.data && (<button className='py-1 px-4 shadow-sm hover:shadow bg-[#3366CC] text-white rounded' onClick={handleLogout}> {loading ? 'Loading...' : 'Logout'} </button>)}
+                    {isLogin && (<Link href={'/login'} className='py-1 px-4 shadow-sm hover:shadow bg-[#3366CC] text-white rounded text-center'>Login</Link>)}
                 </div>
             </div>
         </main>
