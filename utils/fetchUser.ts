@@ -4,6 +4,6 @@ export const getCurrentUser = async () => {
     const data = await res.json();
     return data;
   } catch (error: any) {
-    return new Error(error);
+    console.log(error);
   }
 };

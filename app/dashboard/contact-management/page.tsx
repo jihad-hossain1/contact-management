@@ -7,19 +7,19 @@ import { FaListUl } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const ContactManagementPage = () => {
-    const [users, setUsers] = useState([])
+    const [contacts, setContacts] = useState([])
     const [currentUser, setCurrentUser] = useState({})
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        async function getUsers() {
+        async function getContacts() {
             setLoading(true)
-            const response = await fetch('/api/v1/users')
+            const response = await fetch('/api/v1/contacts')
             const data = await response.json()
-            setUsers(data)
+            setContacts(data)
             setLoading(false)
         }
-        getUsers()
+        getContacts()
     }, [])
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const ContactManagementPage = () => {
     }, [])
 
 
-    console.log(currentUser)
+
     return (
         <div className='max-w-screen-xl mx-auto p-2 my-10'>
             <div className='flex flex-col md:flex-row md:justify-between gap-4'>
@@ -59,13 +59,15 @@ const ContactManagementPage = () => {
                     </thead>
                     <tbody>
                         {
-                            [...Array(20)].map((item, index) => (
+                            loading ? <div className='flex flex-col justify-center items-center min-h-[60vh]'>{"Loading..."}</div> : contacts?.length > 0 ? contacts?.map((item: { name: string, phone: string, email: string }, index) => (
                                 <tr key={index} className="hover:bg-gray-50 border-b transition duration-300">
                                     <td className="py-4 px-6 border-b  text-center border-r border-gray-50">
-                                        Samsung
+                                        {item?.name}
                                     </td>
-                                    <td className="py-4 px-6 border-b text-center border-r border-gray-50 ">Samsung s22</td>
-                                    <td className="py-4 px-6 border-b text-center border-r border-gray-50 ">$599.99</td>
+                                    <td className="py-4 px-6 border-b text-center border-r border-gray-50 ">01779-090909</td>
+                                    <td className="py-4 px-6 border-b text-center border-r border-gray-50 ">
+                                        {item?.email}
+                                    </td>
                                     <td className="py-4 px-6 border-b flex flex-col items-center border-gray-50">
                                         <div className='flex gap-2'>
                                             <button className='h-7 w-7 border border-white rounded-full flex justify-center items-center'>
@@ -77,7 +79,7 @@ const ContactManagementPage = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ))
+                            )) : <div className='flex flex-col justify-center items-center min-h-[60vh]'>{"No data found"}</div>
                         }
 
                     </tbody>

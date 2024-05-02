@@ -1,3 +1,4 @@
+import UserAccount from '@/components/account/UserAccount';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -20,7 +21,15 @@ const DashboardLayout = ({ children }: Readonly<{
                     </span>
                 </Link>
             </aside>
-            <div>{children}</div>
+            <div>
+
+                <nav className='my-3'>
+                    <UserAccount />
+                </nav>
+                <div>
+                    {children}
+                </div>
+            </div>
         </main>
     )
 }
